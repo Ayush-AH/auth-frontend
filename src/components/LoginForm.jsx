@@ -1,5 +1,5 @@
-"use client";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -8,6 +8,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
+  const router = useRouter()
   const [loading, setLoading] = useState(false);
   const validate = () => {
     const { email, password } = formData;
@@ -54,6 +55,7 @@ const LoginForm = () => {
 
       if (res.ok) {
         toast.success("Login successful");
+        router.push('/profile');
         // Redirect to dashboard or reset form
       } else {
         toast.error(data.message || "Login failed");

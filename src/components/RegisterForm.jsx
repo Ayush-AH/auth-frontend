@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -10,7 +11,7 @@ const RegisterForm = () => {
     phone: "",
     password: "",
   });
-
+const router = useRouter()
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
@@ -75,6 +76,7 @@ const RegisterForm = () => {
       if (res.ok) {
         toast.success("Registration successful!");
         setFormData({ fullname: "", email: "", phone: "", password: "" });
+        router.push('/profile');
       } else {
         toast.error(data.message || "Registration failed");
       }

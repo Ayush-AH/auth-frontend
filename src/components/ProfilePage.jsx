@@ -1,7 +1,10 @@
+import { useRouter } from "next/router";
 import React from "react";
 
 const ProfilePage = () => {
+  const router = useRouter()
   const handleLogout = () => {
+    router.push("/")
   };
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
