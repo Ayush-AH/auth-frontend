@@ -1,20 +1,32 @@
-'use client';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import toast from 'react-hot-toast';
+"use client";
+import Link from "next/link";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [loading, setLoading] = useState(false);
-
   const validate = () => {
     const { email, password } = formData;
-    if (!email.trim()) return toast.error('Email is required');
-    if (!/\S+@\S+\.\S+/.test(email)) return toast.error('Invalid email format');
-    if (!password) return toast.error('Password is required');
+
+    if (!email.trim()) {
+      toast.error("Email is required");
+      return false;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error("Invalid email format");
+      return false;
+    }
+
+    if (!password) {
+      toast.error("Password is required");
+      return false;
+    }
+
     return true;
   };
 
@@ -28,23 +40,26 @@ const LoginForm = () => {
 
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://auth-backend-4dd9.onrender.com/api/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json();
 
       if (res.ok) {
-        toast.success('Login successful');
+        toast.success("Login successful");
         // Redirect to dashboard or reset form
       } else {
-        toast.error(data.message || 'Login failed');
+        toast.error(data.message || "Login failed");
       }
     } catch (error) {
-      toast.error('Something went wrong');
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -57,7 +72,10 @@ const LoginForm = () => {
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Email
             </label>
             <input
@@ -72,7 +90,10 @@ const LoginForm = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Password
             </label>
             <input
@@ -107,12 +128,12 @@ const LoginForm = () => {
             disabled={loading}
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 disabled:opacity-60"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="mt-6 text-sm text-center text-gray-600">
-          Don't have an account?{' '}
+          Don't have an account?{" "}
           <Link href="/register" className="text-blue-600 hover:underline">
             Sign up
           </Link>

@@ -1,14 +1,14 @@
-'use client';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import toast from 'react-hot-toast';
+"use client";
+import Link from "next/link";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
-    fullname: '',
-    email: '',
-    phone: '',
-    password: '',
+    fullname: "",
+    email: "",
+    phone: "",
+    password: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -16,13 +16,34 @@ const RegisterForm = () => {
   const validate = () => {
     const { fullname, email, phone, password } = formData;
 
-    if (!fullname.trim()) return toast.error('Full name is required');
-    if (!email.trim()) return toast.error('Email is required');
-    if (!/\S+@\S+\.\S+/.test(email)) return toast.error('Invalid email format');
-    if (!phone.trim()) return toast.error('Phone number is required');
-    if (!/^\d{10}$/.test(phone)) return toast.error('Phone must be 10 digits');
-    if (!password) return toast.error('Password is required');
-    if (password.length < 6) return toast.error('Password must be at least 6 characters');
+    if (!fullname.trim()) {
+      toast.error("Full name is required");
+      return false;
+    }
+    if (!email.trim()) {
+      toast.error("Email is required");
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error("Invalid email format");
+      return false;
+    }
+    if (!phone.trim()) {
+      toast.error("Phone number is required");
+      return false;
+    }
+    if (!/^\d{10}$/.test(phone)) {
+      toast.error("Phone must be 10 digits");
+      return false;
+    }
+    if (!password) {
+      toast.error("Password is required");
+      return false;
+    }
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return false;
+    }
 
     return true;
   };
@@ -39,23 +60,26 @@ const RegisterForm = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:3000/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://auth-backend-4dd9.onrender.com/api/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json();
 
       if (res.ok) {
-        toast.success('Registration successful!');
-        setFormData({ fullname: '', email: '', phone: '', password: '' });
+        toast.success("Registration successful!");
+        setFormData({ fullname: "", email: "", phone: "", password: "" });
       } else {
-        toast.error(data.message || 'Registration failed');
+        toast.error(data.message || "Registration failed");
       }
     } catch (error) {
-      toast.error('Something went wrong. Please try again.');
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -64,11 +88,16 @@ const RegisterForm = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10">
       <div className="w-full max-w-md bg-white rounded-xl shadow-md p-6 sm:p-8">
-        <h2 className="text-2xl font-semibold text-center mb-6">Create Account</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Create Account
+        </h2>
 
         <form className="space-y-5" onSubmit={handleSubmit} noValidate>
           <div>
-            <label htmlFor="fullname" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="fullname"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Full Name
             </label>
             <input
@@ -83,7 +112,10 @@ const RegisterForm = () => {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Email
             </label>
             <input
@@ -98,7 +130,10 @@ const RegisterForm = () => {
           </div>
 
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Phone
             </label>
             <input
@@ -113,7 +148,10 @@ const RegisterForm = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Password
             </label>
             <input
@@ -132,12 +170,12 @@ const RegisterForm = () => {
             disabled={loading}
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 disabled:opacity-60"
           >
-            {loading ? 'Registering...' : 'Register'}
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
 
         <p className="mt-6 text-sm text-center text-gray-600">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link href="/" className="text-blue-600 hover:underline">
             Login
           </Link>
