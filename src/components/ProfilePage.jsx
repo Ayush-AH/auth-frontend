@@ -1,11 +1,33 @@
 import { useRouter } from "next/router";
 import React from "react";
+import toast from "react-hot-toast";
 
 const ProfilePage = () => {
-  const router = useRouter()
-  const handleLogout = () => {
-    router.push("/")
-  };
+  const router = useRouter();
+ const handleLogout = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
+      method: "GET",
+      credentials: "include", // send cookies
+    });
+    console.log(res);
+
+    if (!res.ok) {
+      throw new Error(`Logout failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+    console.log("Logout success:", data);
+    toast.success(data.message || "Logout successful");
+
+    // Optionally redirect user
+    router.push("/");
+
+  } catch (error) {
+    toast.error(error.message || "Logout failed");
+  }
+};
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl shadow-lg w-full max-w-md p-6 sm:p-8">

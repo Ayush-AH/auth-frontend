@@ -11,7 +11,7 @@ const RegisterForm = () => {
     phone: "",
     password: "",
   });
-const router = useRouter()
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
@@ -61,22 +61,19 @@ const router = useRouter()
     setLoading(true);
 
     try {
-      const res = await fetch(
-        "https://auth-backend-4dd9.onrender.com/api/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
 
       const data = await res.json();
 
       if (res.ok) {
         toast.success("Registration successful!");
         setFormData({ fullname: "", email: "", phone: "", password: "" });
-        router.push('/profile');
+        router.push("/profile");
       } else {
         toast.error(data.message || "Registration failed");
       }

@@ -8,8 +8,9 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const router = useRouter()
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
+
   const validate = () => {
     const { email, password } = formData;
 
@@ -41,22 +42,18 @@ const LoginForm = () => {
 
     setLoading(true);
     try {
-      const res = await fetch(
-        "https://auth-backend-4dd9.onrender.com/api/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
 
       const data = await res.json();
 
       if (res.ok) {
         toast.success("Login successful");
-        router.push('/profile');
-        // Redirect to dashboard or reset form
+        router.push("/profile");
       } else {
         toast.error(data.message || "Login failed");
       }
@@ -120,9 +117,9 @@ const LoginForm = () => {
                 Remember me
               </label>
             </div>
-            <a href="#" className="text-blue-600 hover:underline">
+            <Link href="/forgot-password" className="text-blue-600 hover:underline">
               Forgot password?
-            </a>
+            </Link>
           </div>
 
           <button
@@ -130,7 +127,7 @@ const LoginForm = () => {
             disabled={loading}
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 disabled:opacity-60"
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
 
