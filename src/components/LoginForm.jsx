@@ -42,7 +42,7 @@ const LoginForm = () => {
 
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
+      const res = await fetch(`https://auth-backend-4dd9.onrender.com/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

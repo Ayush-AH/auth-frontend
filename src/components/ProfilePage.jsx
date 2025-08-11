@@ -6,7 +6,7 @@ const ProfilePage = () => {
   const router = useRouter();
  const handleLogout = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
+    const res = await fetch(`https://auth-backend-4dd9.onrender.com/api/logout`, {
       method: "GET",
       credentials: "include", // send cookies
     });
