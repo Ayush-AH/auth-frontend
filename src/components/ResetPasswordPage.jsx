@@ -33,7 +33,7 @@ const ResetPasswordPage = () => {
 setLoading(true);
     try {
       const res = await fetch(
-        `https://auth-backend-4dd9.onrender.com/api/reset-password/${token}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/reset-password/${token}`,
         {
           method: "POST",
           headers: {
