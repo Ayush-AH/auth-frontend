@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import toast from "react-hot-toast";
+import RazorpayButton from "./PayBtn";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -42,7 +43,8 @@ const ProfilePage = () => {
           </h2>
           <p className="text-gray-600 text-sm mt-1">johndoe@example.com</p>
 
-          <div className="mt-6 w-full">
+          <div className="mt-6 w-full flex flex-col gap-4">
+             <RazorpayButton/>
             <button
               onClick={handleLogout}
               className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-200"

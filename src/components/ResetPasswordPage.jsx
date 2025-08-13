@@ -16,7 +16,7 @@ const ResetPasswordPage = () => {
     if (!password.trim() || !confirmPassword.trim()) {
       toast.error("Both password fields are required");
       return;
-    }    
+    }
     if (password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       return;
@@ -30,7 +30,7 @@ const ResetPasswordPage = () => {
       toast.error("Invalid or expired token");
       return;
     }
-setLoading(true);
+    setLoading(true);
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/reset-password/${token}`,
@@ -53,8 +53,7 @@ setLoading(true);
       }
     } catch (error) {
       toast.error("Something went wrong");
-    }
-    finally{
+    } finally {
       setLoading(false);
       setPassword("");
       setConfirmPassword("");
